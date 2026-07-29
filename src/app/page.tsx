@@ -11,6 +11,7 @@ import {
   type Testimonial,
   TestimonialCarousel,
 } from "@/components/testimonial-carousel";
+import { MobileCallBar } from "@/components/mobile-call-bar";
 
 const services = [
   {
@@ -432,15 +433,7 @@ export default function Home() {
         </div>
       </section>
 
-      <a href="tel:+33164621840" className="mobile-call-bar md:hidden">
-        <span className="mobile-call-icon" aria-hidden="true">
-          <Bolt />
-        </span>
-        <span>
-          <small>Besoin d’un conseil ?</small>
-          <strong>01 64 62 18 40</strong>
-        </span>
-      </a>
+      <MobileCallBar />
 
       <footer id="legal" className="footer">
         <div className="footer-wordmark" aria-hidden="true">

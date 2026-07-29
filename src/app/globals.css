@@ -165,6 +165,21 @@ textarea:focus-visible {
   padding: 0.75rem 1.1rem 0.75rem 1.25rem;
 }
 
+.nav-cta {
+  min-height: 2.8rem;
+  max-width: 100%;
+  flex: 0 0 auto;
+  gap: 0.55rem;
+  padding: 0.65rem 0.9rem 0.65rem 1rem;
+  border-radius: 999px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.nav-cta svg {
+  flex: 0 0 auto;
+}
+
 .button-medium {
   min-height: 3.25rem;
   padding: 0.8rem 1.25rem;
@@ -774,7 +789,9 @@ textarea:focus-visible {
   border: 1px solid var(--ink);
   background: #282723;
   box-shadow: 0 2rem 5rem rgb(17 17 15 / 0.15);
+  opacity: 1;
   transform-origin: top center;
+  will-change: transform;
 }
 
 .project-card:nth-child(1) {
@@ -804,6 +821,8 @@ textarea:focus-visible {
   background:
     linear-gradient(180deg, rgb(17 17 15 / 0.68), transparent 34%),
     linear-gradient(0deg, rgb(17 17 15 / 0.94), transparent 60%);
+  background-color: transparent;
+  will-change: background-color;
 }
 
 .project-meta {
@@ -1253,31 +1272,52 @@ textarea:focus-visible {
 
 .mobile-call-bar {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
-  left: 1rem;
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
   z-index: 25;
-  display: flex;
+  display: none;
+  width: max-content;
+  max-width: calc(100vw - 1.5rem);
+  min-height: 4rem;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.7rem 0.85rem;
-  border: 1px solid rgb(255 83 41 / 0.45);
-  border-radius: 0.3rem;
-  background: rgb(17 17 15 / 0.94);
-  color: white;
-  box-shadow: 0 1rem 2.5rem rgb(0 0 0 / 0.3);
-  backdrop-filter: blur(1rem);
+  gap: 0.7rem;
+  padding: 0.65rem 1.05rem 0.65rem 0.65rem;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 999px;
+  background: var(--signal);
+  color: var(--ink);
+  box-shadow:
+    0 0 0 4px rgb(17 17 15 / 0.48),
+    0 1rem 2.5rem rgb(0 0 0 / 0.42);
+  transition:
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.mobile-call-bar:hover,
+.mobile-call-bar:focus-visible {
+  background: var(--signal-bright);
+  box-shadow:
+    0 0 0 4px rgb(17 17 15 / 0.62),
+    0 1.2rem 3rem rgb(0 0 0 / 0.48);
+  transform: translateY(-2px);
+}
+
+.mobile-call-bar[hidden] {
+  display: none;
 }
 
 .mobile-call-icon {
   display: inline-flex;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.7rem;
+  height: 2.7rem;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--signal);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--signal);
 }
 
 .mobile-call-bar small,
@@ -1286,14 +1326,17 @@ textarea:focus-visible {
 }
 
 .mobile-call-bar small {
-  color: rgb(255 255 255 / 0.5);
-  font-size: 0.68rem;
+  color: rgb(17 17 15 / 0.68);
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 .mobile-call-bar strong {
-  margin-top: 0.1rem;
-  font-size: 0.95rem;
-  font-weight: 600;
+  margin-top: 0.18rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.1;
 }
 
 .footer {
@@ -1425,6 +1468,10 @@ textarea:focus-visible {
 }
 
 @media (max-width: 767px) {
+  .mobile-call-bar {
+    display: inline-flex;
+  }
+
   .site-header {
     padding: 0.75rem 0.75rem 0;
   }

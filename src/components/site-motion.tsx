@@ -60,12 +60,13 @@ export function SiteMotion({ children }: SiteMotionProps) {
       );
 
       projectCards.forEach((card, index) => {
+        gsap.set(card, { opacity: 1 });
+
         gsap.fromTo(
           card,
-          { y: 70, opacity: 0.35 },
+          { y: 70 },
           {
             y: 0,
-            opacity: 1,
             ease: "none",
             scrollTrigger: {
               trigger: card,
@@ -78,10 +79,8 @@ export function SiteMotion({ children }: SiteMotionProps) {
 
         const nextCard = projectCards[index + 1];
         if (nextCard) {
-          gsap.to(card, {
-            scale: 0.92,
-            filter: "brightness(0.55)",
-            ease: "none",
+          const shade = card.querySelector<HTMLElement>(".project-shade");
+          const stackTimeline = gsap.timeline({
             scrollTrigger: {
               trigger: nextCard,
               start: "top 88%",
@@ -89,6 +88,19 @@ export function SiteMotion({ children }: SiteMotionProps) {
               scrub: true,
             },
           });
+
+          stackTimeline.to(card, { scale: 0.92, ease: "none" }, 0);
+
+          if (shade) {
+            stackTimeline.to(
+              shade,
+              {
+                backgroundColor: "rgb(17 17 15 / 0.52)",
+                ease: "none",
+              },
+              0,
+            );
+          }
         }
       });
 
