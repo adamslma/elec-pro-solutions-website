@@ -1,5 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
+import { AsDigitalLink } from "@/components/as-digital-link";
+import { BoltIcon } from "@/components/brand-mark";
 import {
   ArrowDownIcon,
   ArrowUpRightIcon,
@@ -128,17 +131,6 @@ const marqueeItems = [
   "Domotique",
 ] as const;
 
-function Bolt() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 20 20" className="size-5" fill="none">
-      <path
-        d="m11.9 2-7 9h4.7L8.7 18l6.4-9.2h-4.4L11.9 2Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
 export default function Home() {
   return (
     <SiteMotion>
@@ -153,7 +145,7 @@ export default function Home() {
             aria-label="Élec’Pro Solutions, accueil"
           >
             <span className="brand-mark">
-              <Bolt />
+              <BoltIcon />
             </span>
             <span>
               Élec’Pro <strong>Solutions</strong>
@@ -319,7 +311,7 @@ export default function Home() {
               <ServiceAccordion items={steps} />
               <div className="method-note">
                 <span className="method-note-mark">
-                  <Bolt />
+                  <BoltIcon />
                 </span>
                 <p>
                   Une équipe salariée, un interlocuteur unique et le même niveau
@@ -418,14 +410,14 @@ export default function Home() {
 
       <MobileCallBar />
 
-      <footer id="legal" className="footer">
+      <footer className="footer">
         <div className="footer-wordmark" aria-hidden="true">
           Élec’Pro
         </div>
         <div className="footer-row">
           <a href="#top" className="brand">
             <span className="brand-mark">
-              <Bolt />
+              <BoltIcon />
             </span>
             <span>
               Élec’Pro <strong>Solutions</strong>
@@ -436,12 +428,13 @@ export default function Home() {
           </p>
           <div>
             <a href="#contact">Contact</a>
-            <a href="#legal">Mentions légales</a>
+            <Link href="/mentions-legales">Mentions légales</Link>
           </div>
         </div>
         <p className="footer-disclaimer">
-          Démonstration fictive d’interface web : coordonnées, avis et
-          réalisations présentés à titre illustratif.
+          Démonstration fictive et non fonctionnelle conçue par{" "}
+          <AsDigitalLink /> pour illustrer son expertise UX. Coordonnées, avis
+          et réalisations sont présentés à titre illustratif.
         </p>
       </footer>
     </SiteMotion>

@@ -14,7 +14,7 @@ Le site s'adresse à parts égales aux professionnels et aux particuliers qui é
 
 Élec’Pro Solutions est un projet de démonstration qui montre ce que pourrait être le site vitrine complet d'une entreprise d'électricité générale et de solutions énergétiques. Il doit présenter l'offre, rassurer sur la conduite des interventions et permettre d'amorcer facilement un échange par téléphone, par e-mail ou via une demande de devis fictive.
 
-Le succès du projet se mesure à sa capacité à constituer une démonstration crédible et complète de site d'entreprise pour les deux publics, sans laisser croire que les coordonnées, avis, réalisations ou demandes envoyées correspondent à une activité réelle.
+Le projet est conçu par AS Digital pour illustrer son expertise UX. Son succès se mesure à sa capacité à constituer une démonstration crédible et complète de site d'entreprise pour les deux publics, sans laisser croire que les coordonnées, avis, réalisations ou demandes envoyées correspondent à une activité réelle.
 
 ## Positioning
 
