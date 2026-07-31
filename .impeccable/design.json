@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-31T16:20:09.4001533+02:00",
+  "title": "Design System: Élec’Pro Solutions",
+  "extensions": {
+    "colorMeta": {
+      "graphite-technique": {
+        "role": "neutral",
+        "displayName": "Graphite technique",
+        "canonical": "#11110f",
+        "tonalRamp": ["oklch(15% 0.006 90)", "oklch(25% 0.006 90)", "oklch(35% 0.006 90)", "oklch(47% 0.006 90)", "oklch(59% 0.006 90)", "oklch(71% 0.006 90)", "oklch(83% 0.006 90)", "oklch(95% 0.006 90)"]
+      },
+      "graphite-profond": {
+        "role": "neutral",
+        "displayName": "Graphite profond",
+        "canonical": "#0c0c0b",
+        "tonalRamp": ["oklch(15% 0.004 90)", "oklch(25% 0.004 90)", "oklch(35% 0.004 90)", "oklch(47% 0.004 90)", "oklch(59% 0.004 90)", "oklch(71% 0.004 90)", "oklch(83% 0.004 90)", "oklch(95% 0.004 90)"]
+      },
+      "graphite-footer": {
+        "role": "neutral",
+        "displayName": "Graphite terminal",
+        "canonical": "#070706",
+        "tonalRamp": ["oklch(15% 0.003 90)", "oklch(25% 0.003 90)", "oklch(35% 0.003 90)", "oklch(47% 0.003 90)", "oklch(59% 0.003 90)", "oklch(71% 0.003 90)", "oklch(83% 0.003 90)", "oklch(95% 0.003 90)"]
+      },
+      "papier-chantier": {
+        "role": "neutral",
+        "displayName": "Papier chantier",
+        "canonical": "#f1eee6",
+        "tonalRamp": ["oklch(15% 0.014 88)", "oklch(25% 0.014 88)", "oklch(35% 0.014 88)", "oklch(47% 0.014 88)", "oklch(59% 0.014 88)", "oklch(71% 0.014 88)", "oklch(83% 0.014 88)", "oklch(95% 0.014 88)"]
+      },
+      "papier-lumineux": {
+        "role": "neutral",
+        "displayName": "Papier lumineux",
+        "canonical": "#faf8f2",
+        "tonalRamp": ["oklch(15% 0.01 88)", "oklch(25% 0.01 88)", "oklch(35% 0.01 88)", "oklch(47% 0.01 88)", "oklch(59% 0.01 88)", "oklch(71% 0.01 88)", "oklch(83% 0.01 88)", "oklch(95% 0.01 88)"]
+      },
+      "orange-signal": {
+        "role": "primary",
+        "displayName": "Orange signal",
+        "canonical": "#ff5329",
+        "tonalRamp": ["oklch(15% 0.12 35)", "oklch(25% 0.12 35)", "oklch(35% 0.12 35)", "oklch(47% 0.12 35)", "oklch(59% 0.12 35)", "oklch(71% 0.12 35)", "oklch(83% 0.12 35)", "oklch(95% 0.12 35)"]
+      },
+      "orange-signal-vif": {
+        "role": "primary",
+        "displayName": "Orange signal vif",
+        "canonical": "#ff724c",
+        "tonalRamp": ["oklch(15% 0.1 35)", "oklch(25% 0.1 35)", "oklch(35% 0.1 35)", "oklch(47% 0.1 35)", "oklch(59% 0.1 35)", "oklch(71% 0.1 35)", "oklch(83% 0.1 35)", "oklch(95% 0.1 35)"]
+      },
+      "texte-muted": {
+        "role": "neutral",
+        "displayName": "Texte minéral",
+        "canonical": "#6c6a64",
+        "tonalRamp": ["oklch(15% 0.012 85)", "oklch(25% 0.012 85)", "oklch(35% 0.012 85)", "oklch(47% 0.012 85)", "oklch(59% 0.012 85)", "oklch(71% 0.012 85)", "oklch(83% 0.012 85)", "oklch(95% 0.012 85)"]
+      },
+      "texte-sur-graphite-secondaire": {
+        "role": "neutral",
+        "displayName": "Texte sur graphite secondaire",
+        "canonical": "#9d9b96",
+        "tonalRamp": ["oklch(15% 0.01 85)", "oklch(25% 0.01 85)", "oklch(35% 0.01 85)", "oklch(47% 0.01 85)", "oklch(59% 0.01 85)", "oklch(71% 0.01 85)", "oklch(83% 0.01 85)", "oklch(95% 0.01 85)"]
+      },
+      "texte-sur-graphite-discret": {
+        "role": "neutral",
+        "displayName": "Texte sur graphite discret",
+        "canonical": "#85837e",
+        "tonalRamp": ["oklch(15% 0.01 85)", "oklch(25% 0.01 85)", "oklch(35% 0.01 85)", "oklch(47% 0.01 85)", "oklch(59% 0.01 85)", "oklch(71% 0.01 85)", "oklch(83% 0.01 85)", "oklch(95% 0.01 85)"]
+      },
+      "texte-sur-signal-secondaire": {
+        "role": "primary",
+        "displayName": "Texte sur signal secondaire",
+        "canonical": "#42180f",
+        "tonalRamp": ["oklch(15% 0.06 35)", "oklch(25% 0.06 35)", "oklch(35% 0.06 35)", "oklch(47% 0.06 35)", "oklch(59% 0.06 35)", "oklch(71% 0.06 35)", "oklch(83% 0.06 35)", "oklch(95% 0.06 35)"]
+      },
+      "ligne-controle-sombre": {
+        "role": "neutral",
+        "displayName": "Ligne de contrôle sombre",
+        "canonical": "#66645f",
+        "tonalRamp": ["oklch(15% 0.008 85)", "oklch(25% 0.008 85)", "oklch(35% 0.008 85)", "oklch(47% 0.008 85)", "oklch(59% 0.008 85)", "oklch(71% 0.008 85)", "oklch(83% 0.008 85)", "oklch(95% 0.008 85)"]
+      },
+      "surface-verre": {
+        "role": "neutral",
+        "displayName": "Verre de contrôle",
+        "canonical": "rgb(255 255 255 / 0.055)",
+        "tonalRamp": ["rgb(255 255 255 / 0.02)", "rgb(255 255 255 / 0.035)", "rgb(255 255 255 / 0.055)", "rgb(255 255 255 / 0.08)", "rgb(255 255 255 / 0.12)", "rgb(255 255 255 / 0.18)", "rgb(255 255 255 / 0.28)", "rgb(255 255 255 / 0.42)"]
+      },
+      "ligne-claire": {
+        "role": "neutral",
+        "displayName": "Ligne de plan",
+        "canonical": "rgb(255 255 255 / 0.16)",
+        "tonalRamp": ["rgb(255 255 255 / 0.03)", "rgb(255 255 255 / 0.06)", "rgb(255 255 255 / 0.1)", "rgb(255 255 255 / 0.16)", "rgb(255 255 255 / 0.24)", "rgb(255 255 255 / 0.34)", "rgb(255 255 255 / 0.48)", "rgb(255 255 255 / 0.66)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Impact", "purpose": "Message décisif du premier écran uniquement." },
+      "headline": { "displayName": "Chapitre", "purpose": "Titres des grandes sections." },
+      "title": { "displayName": "Prestation", "purpose": "Titres de cartes, services et projets." },
+      "body": { "displayName": "Explication", "purpose": "Contenu descriptif et rassurant." },
+      "label": { "displayName": "Annotation technique", "purpose": "Kickers, métadonnées et libellés compacts." }
+    },
+    "shadows": [
+      { "name": "navigation-ambiante", "value": "0 1rem 4rem rgb(0 0 0 / 0.18)", "purpose": "Détache discrètement la navigation translucide du héros." },
+      { "name": "carte-en-pile", "value": "0 2rem 5rem rgb(17 17 15 / 0.15)", "purpose": "Clarifie la superposition des réalisations collantes." },
+      { "name": "appel-mobile", "value": "0 0 0 4px rgb(17 17 15 / 0.48), 0 1rem 2.5rem rgb(0 0 0 / 0.42)", "purpose": "Maintient l'action d'appel lisible au-dessus du contenu mobile." }
+    ],
+    "motion": [
+      { "name": "interaction-directe", "value": "220ms ease", "purpose": "Survols de boutons et changements d'état courts." },
+      { "name": "deploiement-panneau", "value": "520ms cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Expansion souple de l'accordéon de méthode." },
+      { "name": "defilement-metiers", "value": "28s linear", "purpose": "Défilement continu de la liste d'expertises." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "mobile-stack", "value": "768px" },
+      { "name": "tablet-stack", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Signal Button",
+      "kind": "button",
+      "refersTo": "button-signal",
+      "description": "Action principale tactile, énergique et immédiatement identifiable.",
+      "html": "<button class=\"ds-btn-signal\"><span>Démarrer un projet</span><svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M4 16 16 4M7 4h9v9\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.7\"/></svg></button>",
+      "css": ".ds-btn-signal{display:inline-flex;min-height:3.8rem;align-items:center;justify-content:center;gap:.65rem;padding:1rem 1.35rem;border:1px solid transparent;border-radius:.35rem;background:var(--signal,#ff5329);color:var(--ink,#11110f);font:700 .84rem/1 Satoshi,Arial,sans-serif;cursor:pointer;transition:transform 220ms ease,background-color 220ms ease}.ds-btn-signal svg{width:1rem;height:1rem}.ds-btn-signal:hover{background:#ff724c;transform:translateY(-2px)}.ds-btn-signal:focus-visible{outline:2px solid var(--signal,#ff5329);outline-offset:4px;transform:translateY(-2px)}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Action secondaire transparente qui respecte le contraste du fond sombre.",
+      "html": "<button class=\"ds-btn-ghost\"><span>Découvrir nos métiers</span><svg aria-hidden=\"true\" viewBox=\"0 0 20 20\"><path d=\"M10 3v13M5 11l5 5 5-5\" fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.6\"/></svg></button>",
+      "css": ".ds-btn-ghost{display:inline-flex;min-height:3.8rem;align-items:center;justify-content:center;gap:.65rem;padding:1rem 1.35rem;border:1px solid rgb(255 255 255/.28);border-radius:.35rem;background:transparent;color:var(--paper-bright,#faf8f2);font:700 .84rem/1 Satoshi,Arial,sans-serif;cursor:pointer;transition:transform 220ms ease,background-color 220ms ease,color 220ms ease}.ds-btn-ghost svg{width:1rem;height:1rem}.ds-btn-ghost:hover{background:#faf8f2;color:#11110f;transform:translateY(-2px)}.ds-btn-ghost:focus-visible{outline:2px solid #ff5329;outline-offset:4px}"
+    },
+    {
+      "name": "Project Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Champ sombre et translucide avec libellé persistant.",
+      "html": "<label class=\"ds-field\"><span>Lieu du projet</span><input type=\"text\" placeholder=\"Ville ou code postal\" /></label>",
+      "css": ".ds-field{display:block;width:min(100%,28rem);color:#faf8f2;font-family:Satoshi,Arial,sans-serif}.ds-field span{display:block;margin-bottom:.55rem;color:#9d9b96;font-size:.74rem;font-weight:600}.ds-field input{width:100%;min-height:3.35rem;box-sizing:border-box;padding:.8rem .95rem;border:1px solid #66645f;border-radius:.25rem;outline:none;background:rgb(255 255 255/.055);color:#fff;font:inherit;transition:border-color 180ms ease,background-color 180ms ease}.ds-field input::placeholder{color:#85837e}.ds-field input:hover{border-color:#85837e}.ds-field input:focus-visible{border-color:#ff5329;background:rgb(255 83 41/.07);outline:2px solid #ff5329;outline-offset:2px}"
+    },
+    {
+      "name": "Floating Navigation",
+      "kind": "nav",
+      "refersTo": "nav-shell",
+      "description": "Capsule translucide qui rassemble marque, parcours et action principale.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\"><span class=\"ds-nav-mark\">ϟ</span><span>Élec’Pro <strong>Solutions</strong></span></a><div class=\"ds-nav-links\"><a href=\"#\">Expertises</a><a href=\"#\">Méthode</a></div><a class=\"ds-nav-cta\" href=\"#\">Démarrer</a></nav>",
+      "css": ".ds-nav{display:flex;width:min(100%,58rem);min-height:4.25rem;box-sizing:border-box;align-items:center;justify-content:space-between;gap:1.5rem;padding:.5rem .55rem .5rem 1rem;border:1px solid rgb(255 255 255/.14);border-radius:999px;background:rgb(17 17 15/.76);color:#faf8f2;box-shadow:0 1rem 4rem rgb(0 0 0/.18);font-family:Satoshi,Arial,sans-serif}.ds-nav a{color:inherit;text-decoration:none}.ds-nav-brand{display:flex;align-items:center;gap:.7rem;font-size:.94rem}.ds-nav-brand strong{color:#ff5329}.ds-nav-mark{display:grid;width:2.25rem;height:2.25rem;place-items:center;border-radius:50%;background:#ff5329;color:#11110f;font-weight:800}.ds-nav-links{display:flex;gap:2rem;color:#9d9b96;font-size:.82rem}.ds-nav-links a:hover,.ds-nav-links a:focus-visible{color:#ff5329}.ds-nav-cta{padding:.85rem 1.1rem;border-radius:999px;background:#ff5329;color:#11110f!important;font-size:.8rem;font-weight:700}.ds-nav a:focus-visible{outline:2px solid #ff5329;outline-offset:4px}"
+    },
+    {
+      "name": "Technical Kicker",
+      "kind": "chip",
+      "refersTo": "typography.label",
+      "description": "Annotation de chapitre compacte qui agit comme un repère de plan.",
+      "html": "<span class=\"ds-kicker\">Une méthode sans court-circuit</span>",
+      "css": ".ds-kicker{display:inline-block;color:#ff5329;font:700 .68rem/1.2 Satoshi,Arial,sans-serif;letter-spacing:.19em;text-transform:uppercase}.ds-kicker:focus-visible{outline:2px solid #ff5329;outline-offset:4px}"
+    },
+    {
+      "name": "Service Card",
+      "kind": "card",
+      "refersTo": "colors.graphite-technique",
+      "description": "Carte photographique structurée par une bordure, un voile sombre et une action ronde.",
+      "html": "<article class=\"ds-service-card\"><p class=\"ds-service-meta\">Étude, fourniture, pose et suivi</p><div class=\"ds-service-copy\"><h3>Bornes de recharge</h3><p>Une infrastructure calibrée pour le bâtiment, les véhicules et les usages de demain.</p></div><button aria-label=\"Découvrir\" class=\"ds-round-action\">↗</button></article>",
+      "css": ".ds-service-card{position:relative;display:grid;min-height:22rem;grid-template-columns:1fr auto;grid-template-rows:auto 1fr;gap:1.5rem;box-sizing:border-box;padding:1.8rem;overflow:hidden;border:1px solid #11110f;background:linear-gradient(135deg,#3a3933,#171714 70%);color:#fff;font-family:Satoshi,Arial,sans-serif}.ds-service-card:before{content:\"\";position:absolute;inset:0;background:linear-gradient(0deg,rgb(17 17 15/.9),transparent 75%);pointer-events:none}.ds-service-card>*{position:relative}.ds-service-meta{grid-column:1/-1;margin:0;color:rgb(255 255 255/.58);font-size:.69rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}.ds-service-copy{align-self:end}.ds-service-copy h3{margin:0;font-size:clamp(2rem,4vw,3.6rem);font-weight:500;letter-spacing:-.065em;line-height:.96}.ds-service-copy p{max-width:30rem;margin:1rem 0 0;color:rgb(255 255 255/.64);font-size:.93rem;line-height:1.6}.ds-round-action{display:grid;width:3.25rem;height:3.25rem;align-self:end;place-items:center;border:1px solid rgb(255 255 255/.38);border-radius:50%;background:rgb(17 17 15/.2);color:#fff;font-size:1.1rem;cursor:pointer;transition:transform 200ms ease,background-color 200ms ease,color 200ms ease}.ds-round-action:hover{background:#ff5329;color:#11110f;transform:rotate(10deg)}.ds-round-action:focus-visible{outline:2px solid #ff5329;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le Chantier clair",
+    "overview": "Le système donne à voir un chantier organisé avant même qu'un technicien n'arrive : chaque information a une place nette, chaque contraste a une fonction et l'énergie circule sans bruit visuel. L'atmosphère est franche, robuste, précise et rassurante. La densité alterne entre de grands messages très courts et des zones techniques plus structurées, afin d'associer impact commercial et maîtrise opérationnelle.\n\nLe vocabulaire visuel oppose des fonds graphite à des surfaces papier, puis réserve l'orange signal aux actions et aux points de tension utiles. La grille, les traits fins, les aplats et les images désaturées évoquent le plan de chantier sans basculer dans l'imagerie futuriste. Le résultat doit rester tactile et direct, jamais corporate générique, néon technologique ou artisanal rustique.",
+    "keyCharacteristics": [
+      "Contraste franc entre graphite profond et papier chaud.",
+      "Orange signal rare, énergique et toujours fonctionnel.",
+      "Typographie Satoshi massive, compacte et très lisible.",
+      "Composition asymétrique guidée par une grille technique.",
+      "Composants tactiles et directs, avec peu d'ornement gratuit."
+    ],
+    "rules": [
+      { "name": "The Signal Is Earned Rule", "body": "L'orange identifie une action, un état ou une information prioritaire ; il ne remplit jamais l'interface par simple décoration.", "section": "colors" },
+      { "name": "The Compressed Impact Rule", "body": "Les grands titres gagnent leur autorité par l'échelle et un rythme serré ; les paragraphes conservent au contraire un interlignage ample.", "section": "typography" },
+      { "name": "The Clear Route Rule", "body": "Chaque section doit révéler en un coup d'œil son message principal, sa preuve et la prochaine action possible.", "section": "layout" },
+      { "name": "The Flat First Rule", "body": "Une surface reste plate tant que sa fonction ne justifie pas visuellement qu'elle flotte au-dessus du document.", "section": "elevation" },
+      { "name": "The Purposeful Curve Rule", "body": "Un arrondi signale une prise en main ou une identité compacte ; il ne sert pas à adoucir arbitrairement chaque conteneur.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do réserver l'orange aux actions, états, repères et informations réellement prioritaires.",
+      "Do associer des titres compacts et expressifs à des paragraphes courts, calmes et généreusement interlignés.",
+      "Do utiliser les bordures, la grille et les contrastes de surface pour rendre la structure immédiatement lisible.",
+      "Do préserver une action claire par chapitre et des états de focus visibles.",
+      "Do réduire ou neutraliser les animations lorsque l'utilisateur préfère moins de mouvement."
+    ],
+    "donts": [
+      "Don't introduire une seconde couleur vive, des dégradés néon ou des effets futuristes décoratifs.",
+      "Don't arrondir toutes les cartes ou transformer chaque contrôle en capsule.",
+      "Don't multiplier les ombres sur des surfaces qui ne flottent pas réellement.",
+      "Don't utiliser une typographie rustique, manuscrite ou décorative pour simuler l'artisanat.",
+      "Don't remplir les grands espaces : la respiration fait partie de la confiance et de la clarté."
+    ]
+  }
+}

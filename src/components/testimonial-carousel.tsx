@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+} from "@/components/directional-icons";
 
 export type Testimonial = Readonly<{
   quote: string;
@@ -18,6 +23,15 @@ export function TestimonialCarousel({
   testimonials,
 }: TestimonialCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  if (testimonials.length === 0) {
+    return (
+      <output className="testimonial-shell testimonial-empty">
+        <p>Les retours clients seront bientôt disponibles.</p>
+      </output>
+    );
+  }
 
   const move = (offset: number) => {
     setActiveIndex(
@@ -26,12 +40,40 @@ export function TestimonialCarousel({
     );
   };
 
+  const handleTouchEnd = (clientX: number) => {
+    if (touchStartX.current === null) {
+      return;
+    }
+
+    const distance = clientX - touchStartX.current;
+    touchStartX.current = null;
+
+    if (Math.abs(distance) >= 48) {
+      move(distance > 0 ? -1 : 1);
+    }
+  };
+
   return (
-    <div className="testimonial-shell" data-testimonials>
+    <div
+      className="testimonial-shell"
+      data-testimonials
+      onTouchStart={(event) => {
+        touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+      }}
+      onTouchEnd={(event) => {
+        const clientX = event.changedTouches[0]?.clientX;
+        if (clientX !== undefined) {
+          handleTouchEnd(clientX);
+        }
+      }}
+      onTouchCancel={() => {
+        touchStartX.current = null;
+      }}
+    >
       <div className="testimonial-portraits" aria-hidden="true">
         {testimonials.map((testimonial, index) => (
           <span
-            key={testimonial.portrait}
+            key={`${testimonial.portrait}-${index}`}
             className={`testimonial-portrait ${
               index === activeIndex ? "is-active" : ""
             }`}
@@ -52,7 +94,7 @@ export function TestimonialCarousel({
 
           return (
             <blockquote
-              key={testimonial.author}
+              key={`${testimonial.author}-${index}`}
               className={`testimonial ${isActive ? "is-active" : ""}`}
               aria-hidden={!isActive}
               data-testimonial={index}
@@ -63,7 +105,9 @@ export function TestimonialCarousel({
                   <p>{testimonial.author}</p>
                   <p>{testimonial.role}</p>
                 </div>
-                <span className="testimonial-index">0{index + 1}</span>
+                <span className="testimonial-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
               </footer>
             </blockquote>
           );
@@ -76,7 +120,7 @@ export function TestimonialCarousel({
           onClick={() => move(-1)}
           aria-label="Témoignage précédent"
         >
-          ←
+          <ArrowLeftIcon />
         </button>
         <button
           type="button"
@@ -84,7 +128,7 @@ export function TestimonialCarousel({
           onClick={() => move(1)}
           aria-label="Témoignage suivant"
         >
-          →
+          <ArrowRightIcon />
         </button>
       </div>
     </div>

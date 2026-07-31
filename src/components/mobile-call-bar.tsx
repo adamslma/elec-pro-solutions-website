@@ -21,7 +21,7 @@ export function MobileCallBar() {
 
   useEffect(() => {
     const contactSection = document.querySelector("#contact");
-    if (!contactSection) {
+    if (!contactSection || !("IntersectionObserver" in window)) {
       return;
     }
 

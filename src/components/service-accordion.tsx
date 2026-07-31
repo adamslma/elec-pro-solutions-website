@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
+
+import { ArrowUpRightIcon } from "@/components/directional-icons";
 
 export type AccordionItem = Readonly<{
   title: string;
@@ -13,6 +15,11 @@ type ServiceAccordionProps = Readonly<{
 
 export function ServiceAccordion({ items }: ServiceAccordionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const accordionId = useId();
+
+  if (items.length === 0) {
+    return null;
+  }
 
   return (
     <ul
@@ -21,7 +28,8 @@ export function ServiceAccordion({ items }: ServiceAccordionProps) {
     >
       {items.map((item, index) => {
         const isActive = index === activeIndex;
-        const panelId = `accordion-panel-${index}`;
+        const panelId = `${accordionId}-panel-${index}`;
+        const triggerId = `${accordionId}-trigger-${index}`;
 
         return (
           <li
@@ -30,6 +38,7 @@ export function ServiceAccordion({ items }: ServiceAccordionProps) {
             data-stack-card
           >
             <button
+              id={triggerId}
               type="button"
               className="accordion-trigger"
               aria-controls={panelId}
@@ -38,15 +47,20 @@ export function ServiceAccordion({ items }: ServiceAccordionProps) {
             >
               <span className="accordion-title">{item.title}</span>
               <span className="accordion-icon" aria-hidden="true">
-                ↗
+                <ArrowUpRightIcon />
               </span>
             </button>
-            <div id={panelId} className="accordion-content" hidden={!isActive}>
+            <section
+              id={panelId}
+              className="accordion-content"
+              aria-labelledby={triggerId}
+              hidden={!isActive}
+            >
               <p>{item.text}</p>
               <a href="#contact" className="accordion-link">
-                En parler à l’équipe <span aria-hidden="true">↗</span>
+                En parler à l’équipe <ArrowUpRightIcon />
               </a>
-            </div>
+            </section>
           </li>
         );
       })}

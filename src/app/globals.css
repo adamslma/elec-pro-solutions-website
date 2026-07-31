@@ -1,4 +1,3 @@
-@import url("https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap");
 @import "tailwindcss";
 
 :root {
@@ -9,6 +8,10 @@
   --signal: #ff5329;
   --signal-bright: #ff724c;
   --muted: #6c6a64;
+  --text-on-dark-secondary: #9d9b96;
+  --text-on-dark-muted: #85837e;
+  --text-on-signal-secondary: #42180f;
+  --line-on-dark-control: #66645f;
   --line: rgb(17 17 15 / 0.16);
   --font-display: "Satoshi", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -34,6 +37,9 @@ body {
   background: var(--deep);
   color: var(--paper-bright);
   font-family: var(--font-display);
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 a,
@@ -42,6 +48,11 @@ input,
 select,
 textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+  touch-action: manipulation;
 }
 
 a {
@@ -56,6 +67,14 @@ textarea {
   font: inherit;
 }
 
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
@@ -68,6 +87,30 @@ textarea:focus-visible {
 ::selection {
   background: var(--signal);
   color: var(--ink);
+}
+
+.skip-link {
+  position: fixed;
+  top: max(0.75rem, env(safe-area-inset-top));
+  left: max(0.75rem, env(safe-area-inset-left));
+  z-index: 100;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--paper-bright);
+  border-radius: 0.25rem;
+  background: var(--signal);
+  color: var(--ink);
+  font-weight: 700;
+  transform: translateY(calc(-100% - 2rem));
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus-visible {
+  outline-color: var(--paper-bright);
+  transform: translateY(0);
+}
+
+#main-content:focus {
+  outline: none;
 }
 
 .site-header {
@@ -122,7 +165,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: clamp(1.5rem, 3vw, 3.5rem);
-  color: rgb(250 248 242 / 0.62);
+  color: var(--text-on-dark-secondary);
   font-size: 0.82rem;
 }
 
@@ -140,6 +183,8 @@ textarea:focus-visible {
 
 .button {
   display: inline-flex;
+  max-width: 100%;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
@@ -148,6 +193,7 @@ textarea:focus-visible {
   font-size: 0.84rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+  text-align: center;
   transition:
     transform 220ms ease,
     background-color 220ms ease,
@@ -158,6 +204,26 @@ textarea:focus-visible {
 .button:hover,
 .button:focus-visible {
   transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0) scale(0.985);
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.52;
+  pointer-events: none;
+  transform: none;
+}
+
+.button svg,
+.round-link svg,
+.carousel-button svg,
+.accordion-icon svg,
+.accordion-link svg,
+.mobile-menu-link svg {
+  flex: 0 0 auto;
 }
 
 .button-small {
@@ -280,19 +346,33 @@ textarea:focus-visible {
 }
 
 .hero h1 {
-  width: max-content;
-  max-width: 72rem;
+  width: fit-content;
+  max-width: min(72rem, 100%);
   margin: 1.8rem 0 0;
   color: var(--paper-bright);
   font-size: clamp(4.2rem, 7.2vw, 8rem);
   font-weight: 600;
-  letter-spacing: -0.085em;
-  line-height: 0.86;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .hero-line {
   display: block;
-  white-space: nowrap;
+  white-space: normal;
+}
+
+.hero-copy,
+.hero-bottom > *,
+.section-intro > *,
+.method-layout > *,
+.projects-layout > *,
+.testimonial-layout > *,
+.contact-layout > *,
+.service-content > *,
+.project-title > *,
+.testimonial footer > *,
+.footer-row > * {
+  min-width: 0;
 }
 
 .hero h1 em {
@@ -312,7 +392,7 @@ textarea:focus-visible {
 .hero-bottom > p {
   max-width: 27rem;
   margin: 0;
-  color: rgb(250 248 242 / 0.62);
+  color: var(--text-on-dark-secondary);
   font-size: 1.05rem;
   line-height: 1.65;
 }
@@ -379,6 +459,14 @@ textarea:focus-visible {
   display: flex;
   width: max-content;
   animation: marquee-scroll 28s linear infinite;
+  animation-play-state: paused;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.marquee-track.is-visible {
+  animation-play-state: running;
+  will-change: transform;
 }
 
 .marquee-group {
@@ -407,14 +495,25 @@ textarea:focus-visible {
 }
 
 @keyframes marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-20%, 0, 0);
   }
 }
 
 .chapter {
   position: relative;
   padding: clamp(8rem, 14vw, 13rem) 2rem;
+}
+
+@supports (content-visibility: auto) {
+  .chapter:not(.projects-section) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 56rem;
+  }
 }
 
 .section-shell {
@@ -579,6 +678,10 @@ textarea:focus-visible {
   transform: rotate(10deg);
 }
 
+.round-link:active {
+  transform: rotate(0) scale(0.94);
+}
+
 .technical-lines {
   background-size: 7rem 7rem;
   opacity: 0.55;
@@ -602,7 +705,7 @@ textarea:focus-visible {
 .method-copy > p:not(.kicker) {
   max-width: 31rem;
   margin: 2.2rem 0 0;
-  color: rgb(250 248 242 / 0.58);
+  color: var(--text-on-dark-secondary);
   font-size: 1rem;
   line-height: 1.8;
 }
@@ -699,7 +802,7 @@ textarea:focus-visible {
   max-width: 28rem;
   margin-top: auto;
   padding: 0 1.4rem 1.5rem;
-  color: rgb(250 248 242 / 0.58);
+  color: var(--text-on-dark-secondary);
   font-size: 0.92rem;
   line-height: 1.75;
 }
@@ -725,7 +828,7 @@ textarea:focus-visible {
   align-items: center;
   margin-top: 1.25rem;
   padding: 1.5rem;
-  border-left: 3px solid var(--signal);
+  border: 1px solid var(--signal);
   background: rgb(255 83 41 / 0.09);
 }
 
@@ -761,7 +864,8 @@ textarea:focus-visible {
 
 .projects-intro {
   position: sticky;
-  top: 8rem;
+  top: 50dvh;
+  transform: translateY(-50%);
 }
 
 .projects-intro h2 {
@@ -791,7 +895,6 @@ textarea:focus-visible {
   box-shadow: 0 2rem 5rem rgb(17 17 15 / 0.15);
   opacity: 1;
   transform-origin: top center;
-  will-change: transform;
 }
 
 .project-card:nth-child(1) {
@@ -822,7 +925,6 @@ textarea:focus-visible {
     linear-gradient(180deg, rgb(17 17 15 / 0.68), transparent 34%),
     linear-gradient(0deg, rgb(17 17 15 / 0.94), transparent 60%);
   background-color: transparent;
-  will-change: background-color;
 }
 
 .project-meta {
@@ -885,8 +987,23 @@ textarea:focus-visible {
 .testimonial-shell {
   position: relative;
   min-height: 32rem;
-  padding: 2rem 0 0;
+  padding: 2rem 0 5rem;
   border-top: 1px solid var(--ink);
+  touch-action: pan-y;
+}
+
+.testimonial-empty {
+  display: grid;
+  min-height: 12rem;
+  place-items: center start;
+  color: var(--text-on-signal-secondary);
+}
+
+.testimonial-empty p {
+  max-width: 36rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .testimonial-portraits {
@@ -958,6 +1075,7 @@ textarea:focus-visible {
 
 .testimonial footer {
   display: flex;
+  flex-wrap: wrap;
   align-items: end;
   justify-content: space-between;
   gap: 2rem;
@@ -976,7 +1094,7 @@ textarea:focus-visible {
 
 .testimonial footer p:last-child {
   margin-top: 0.25rem;
-  color: rgb(17 17 15 / 0.65);
+  color: var(--text-on-signal-secondary);
   font-size: 0.82rem;
 }
 
@@ -1055,7 +1173,7 @@ textarea:focus-visible {
 .contact-copy > p:not(.kicker) {
   max-width: 29rem;
   margin: 2rem 0 0;
-  color: rgb(250 248 242 / 0.56);
+  color: var(--text-on-dark-secondary);
   line-height: 1.75;
 }
 
@@ -1100,6 +1218,16 @@ textarea:focus-visible {
   backdrop-filter: blur(1rem);
 }
 
+.form-success {
+  display: block;
+  width: 100%;
+}
+
+.form-success:focus {
+  outline: 2px solid var(--signal);
+  outline-offset: 4px;
+}
+
 .field {
   display: block;
 }
@@ -1107,7 +1235,7 @@ textarea:focus-visible {
 .field-label {
   display: block;
   margin-bottom: 0.55rem;
-  color: rgb(250 248 242 / 0.62);
+  color: var(--text-on-dark-secondary);
   font-size: 0.74rem;
   font-weight: 600;
 }
@@ -1116,11 +1244,12 @@ textarea:focus-visible {
 .field select,
 .field textarea {
   width: 100%;
-  border: 1px solid rgb(255 255 255 / 0.16);
+  border: 1px solid var(--line-on-dark-control);
   border-radius: 0.25rem;
   outline: none;
   background: rgb(255 255 255 / 0.055);
   color: white;
+  font-size: 1rem;
   transition:
     border-color 180ms ease,
     background-color 180ms ease;
@@ -1138,7 +1267,7 @@ textarea:focus-visible {
 }
 
 .field select {
-  color: rgb(255 255 255 / 0.72);
+  color: var(--text-on-dark-secondary);
 }
 
 .field option {
@@ -1148,7 +1277,7 @@ textarea:focus-visible {
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgb(255 255 255 / 0.28);
+  color: var(--text-on-dark-muted);
 }
 
 .field input:focus,
@@ -1160,10 +1289,42 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
+.field input[aria-invalid="true"]:not(:focus),
+.field select[aria-invalid="true"]:not(:focus),
+.field textarea[aria-invalid="true"]:not(:focus) {
+  border-color: var(--signal);
+}
+
+.field-hint,
+.field-error {
+  display: block;
+  margin-top: 0.55rem;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.field-hint {
+  color: var(--text-on-dark-muted);
+}
+
+.field-error {
+  color: var(--signal-bright);
+  font-weight: 600;
+}
+
+.form-error-summary {
+  margin: 0 0 1.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--signal);
+  color: var(--paper-bright);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .field input[type="file"] {
   min-height: auto;
   padding: 0.7rem;
-  color: rgb(255 255 255 / 0.58);
+  color: var(--text-on-dark-secondary);
 }
 
 .field input[type="file"]::file-selector-button {
@@ -1199,11 +1360,13 @@ textarea:focus-visible {
 .form-success p:not(.kicker) {
   max-width: 34rem;
   margin: 1.25rem 0 0;
-  color: rgb(255 255 255 / 0.6);
+  color: var(--text-on-dark-secondary);
   line-height: 1.7;
 }
 
 .mobile-menu-trigger {
+  position: relative;
+  z-index: 31;
   display: none;
   width: 2.75rem;
   height: 2.75rem;
@@ -1213,6 +1376,10 @@ textarea:focus-visible {
   border-radius: 50%;
   background: transparent;
   color: white;
+}
+
+.mobile-menu-trigger:active {
+  transform: scale(0.94);
 }
 
 .menu-icon {
@@ -1239,24 +1406,89 @@ textarea:focus-visible {
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 30;
-  padding: 5.5rem 1.25rem 1.25rem;
+  z-index: 100;
+  width: 100vw;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  padding: calc(5.5rem + env(safe-area-inset-top))
+    max(1.25rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom))
+    max(1.25rem, env(safe-area-inset-left));
   background: rgb(0 0 0 / 0.76);
   backdrop-filter: blur(0.8rem);
 }
 
 .mobile-menu-panel {
+  width: min(100%, 44rem);
   min-height: calc(100dvh - 6.75rem);
+  margin-inline: auto;
   padding: 1.5rem;
   border: 1px solid rgb(255 255 255 / 0.16);
   background: #181815;
   box-shadow: 0 2rem 5rem rgb(0 0 0 / 0.35);
 }
 
+.mobile-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.mobile-menu-close {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--paper-bright);
+}
+
+.mobile-menu-close:hover,
+.mobile-menu-close:focus-visible {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+.mobile-menu-close:active {
+  transform: scale(0.94);
+}
+
+@supports not (height: 100dvh) {
+  .mobile-menu-panel {
+    min-height: calc(100vh - 6.75rem);
+  }
+}
+
+@supports not (backdrop-filter: blur(1rem)) {
+  .nav-shell,
+  .mobile-menu,
+  .quote-form,
+  .form-success {
+    backdrop-filter: none;
+  }
+
+  .nav-shell {
+    background: var(--deep);
+  }
+
+  .mobile-menu {
+    background: var(--deep);
+  }
+}
+
 .mobile-menu-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1.1rem 0;
   border-bottom: 1px solid rgb(255 255 255 / 0.15);
   color: white;
@@ -1304,6 +1536,10 @@ textarea:focus-visible {
   transform: translateY(-2px);
 }
 
+.carousel-button:active {
+  transform: translateY(0) scale(0.94);
+}
+
 .mobile-call-bar[hidden] {
   display: none;
 }
@@ -1326,7 +1562,7 @@ textarea:focus-visible {
 }
 
 .mobile-call-bar small {
-  color: rgb(17 17 15 / 0.68);
+  color: var(--text-on-signal-secondary);
   font-size: 0.64rem;
   font-weight: 600;
   line-height: 1.1;
@@ -1365,7 +1601,7 @@ textarea:focus-visible {
   margin: 5rem auto 0;
   padding-top: 1.5rem;
   border-top: 1px solid rgb(255 255 255 / 0.14);
-  color: rgb(255 255 255 / 0.48);
+  color: var(--text-on-dark-muted);
   font-size: 0.78rem;
 }
 
@@ -1382,7 +1618,7 @@ textarea:focus-visible {
 .footer-disclaimer {
   width: min(100%, 90rem);
   margin: 2rem auto 0;
-  color: rgb(255 255 255 / 0.28);
+  color: var(--text-on-dark-muted);
   font-size: 0.68rem;
   line-height: 1.6;
 }
@@ -1435,7 +1671,7 @@ textarea:focus-visible {
 
   .section-lead {
     grid-column: 1;
-    margin-left: min(16rem, 24vw);
+    margin-left: clamp(4rem, 12vw, 8rem);
   }
 
   .method-layout,
@@ -1452,18 +1688,53 @@ textarea:focus-visible {
     position: relative;
     top: auto;
     max-width: 50rem;
+    transform: none;
   }
 
   .project-stack {
+    display: grid;
+    gap: 1.25rem;
     margin-top: 1rem;
   }
 
-  .project-card {
+  .project-card,
+  .project-card:nth-child(1),
+  .project-card:nth-child(2),
+  .project-card:nth-child(3) {
+    position: relative;
+    top: auto;
     min-height: 35rem;
+    margin-bottom: 0;
   }
 
   .testimonial-shell {
     min-height: 29rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .service-accordion {
+    min-height: auto;
+    flex-direction: column;
+  }
+
+  .accordion-panel,
+  .accordion-panel.is-active {
+    flex: 0 0 auto;
+  }
+
+  .accordion-trigger {
+    min-height: 5.5rem;
+    padding: 1.2rem;
+  }
+
+  .accordion-title {
+    max-width: min(32rem, calc(100% - 4rem));
+  }
+
+  .accordion-content {
+    max-width: 42rem;
+    padding: 0 1.2rem 1.3rem;
   }
 }
 
@@ -1473,7 +1744,9 @@ textarea:focus-visible {
   }
 
   .site-header {
-    padding: 0.75rem 0.75rem 0;
+    padding: max(0.75rem, env(safe-area-inset-top))
+      max(0.75rem, env(safe-area-inset-right)) 0
+      max(0.75rem, env(safe-area-inset-left));
   }
 
   .nav-shell {
@@ -1496,14 +1769,15 @@ textarea:focus-visible {
 
   .hero-inner {
     gap: 3rem;
-    padding: 8rem 1.15rem 3.5rem;
+    padding: 8rem max(1.15rem, env(safe-area-inset-right)) 3.5rem
+      max(1.15rem, env(safe-area-inset-left));
   }
 
   .hero h1 {
     margin-top: 1.4rem;
     font-size: clamp(3.4rem, 15.5vw, 5.6rem);
-    letter-spacing: -0.08em;
-    line-height: 0.9;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
   }
 
   .hero-line {
@@ -1517,8 +1791,13 @@ textarea:focus-visible {
   }
 
   .hero-actions {
-    flex-direction: row;
-    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .button {
+    width: 100%;
   }
 
   .button-large {
@@ -1541,7 +1820,8 @@ textarea:focus-visible {
   }
 
   .chapter {
-    padding: 7.5rem 1.15rem;
+    padding: 7.5rem max(1.15rem, env(safe-area-inset-right)) 7.5rem
+      max(1.15rem, env(safe-area-inset-left));
   }
 
   .section-intro {
@@ -1610,7 +1890,7 @@ textarea:focus-visible {
 
   .project-card {
     min-height: 31rem;
-    margin-bottom: 15vh;
+    margin-bottom: 0;
   }
 
   .project-card:nth-child(1) {
@@ -1652,10 +1932,6 @@ textarea:focus-visible {
     left: 0;
   }
 
-  .contact-details strong {
-    overflow-wrap: anywhere;
-  }
-
   .quote-form,
   .form-success {
     margin-inline: -0.25rem;
@@ -1663,7 +1939,9 @@ textarea:focus-visible {
   }
 
   .footer {
-    padding: 5rem 1.15rem 7rem;
+    padding: 5rem max(1.15rem, env(safe-area-inset-right))
+      max(7rem, calc(env(safe-area-inset-bottom) + 5.5rem))
+      max(1.15rem, env(safe-area-inset-left));
   }
 
   .footer-wordmark {
@@ -1679,6 +1957,104 @@ textarea:focus-visible {
   .footer-row p {
     text-align: left;
   }
+
+  .footer-row > div {
+    flex-wrap: wrap;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .group:hover img {
+    transform: none;
+  }
+
+  .project-stack {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .project-card,
+  .project-card:nth-child(1),
+  .project-card:nth-child(2),
+  .project-card:nth-child(3) {
+    position: relative;
+    top: auto;
+    margin-bottom: 0;
+  }
+
+  .project-card img {
+    filter: grayscale(0.12) contrast(1.03);
+  }
+
+  .button:hover,
+  .round-link:hover,
+  .carousel-button:hover,
+  .mobile-call-bar:hover {
+    transform: none;
+  }
+
+  .button:active {
+    transform: scale(0.985);
+  }
+
+  .round-link:active,
+  .carousel-button:active,
+  .mobile-menu-trigger:active {
+    transform: scale(0.94);
+  }
+}
+
+@media (max-width: 1023px) and (orientation: landscape) and (max-height: 520px) {
+  .hero-media {
+    min-height: 22rem;
+  }
+
+  .chapter {
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+  }
+
+  .mobile-menu-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-actions,
+  .hero-actions .button,
+  .mobile-menu-panel .button {
+    width: 100%;
+  }
+
+  .mobile-call-bar {
+    right: 0.5rem;
+    bottom: max(0.5rem, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 1rem);
+  }
+}
+
+@media (forced-colors: active) {
+  .button,
+  .round-link,
+  .carousel-button,
+  .mobile-menu-trigger,
+  .field input,
+  .field select,
+  .field textarea {
+    border: 1px solid ButtonText;
+  }
+
+  .skip-link,
+  .button:focus-visible,
+  .round-link:focus-visible,
+  .carousel-button:focus-visible,
+  .mobile-menu-trigger:focus-visible,
+  .field input:focus-visible,
+  .field select:focus-visible,
+  .field textarea:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 3px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1693,5 +2069,10 @@ textarea:focus-visible {
     animation-iteration-count: 1;
     scroll-behavior: auto;
     transition-duration: 0.01ms;
+  }
+
+  .marquee-track {
+    animation: none;
+    transform: none;
   }
 }

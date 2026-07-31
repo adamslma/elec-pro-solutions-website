@@ -1,144 +1,254 @@
 "use client";
 
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRef } from "react";
-
-gsap.registerPlugin(ScrollTrigger);
+import { useEffect, useRef } from "react";
 
 type SiteMotionProps = Readonly<{
   children: React.ReactNode;
 }>;
 
+const easeOut = "cubic-bezier(0.22, 1, 0.36, 1)";
+const clamp = (value: number) => Math.min(1, Math.max(0, value));
+
 export function SiteMotion({ children }: SiteMotionProps) {
-  const scope = useRef<HTMLElement>(null);
+  const scope = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
+  useEffect(() => {
+    const root = scope.current;
+    if (
+      !root ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
 
-      const heroTimeline = gsap.timeline({
-        defaults: { ease: "power3.out" },
-      });
+    const animations: Animation[] = [];
+    const isCompact = window.matchMedia("(max-width: 1023px)").matches;
 
-      heroTimeline
-        .fromTo(
-          "[data-hero-copy]",
-          { opacity: 0, y: 36 },
-          { opacity: 1, y: 0, duration: 1.05 },
-        )
-        .fromTo(
-          "[data-hero-media]",
-          { opacity: 0, x: 70, scale: 0.94 },
-          { opacity: 1, x: 0, scale: 1, duration: 1.2 },
-          "-=0.72",
-        );
+    const play = (
+      element: HTMLElement,
+      keyframes: Keyframe[],
+      options: KeyframeAnimationOptions,
+    ) => {
+      animations.push(element.animate(keyframes, options));
+    };
 
-      gsap.utils.toArray<HTMLElement>("[data-reveal]").forEach((element) => {
-        gsap.fromTo(
-          element,
-          { opacity: 0, y: 32 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: element,
-              start: "top 88%",
-              once: true,
-            },
-          },
-        );
-      });
+    const heroCopy = root.querySelector<HTMLElement>("[data-hero-copy]");
+    const heroMedia = root.querySelector<HTMLElement>("[data-hero-media]");
 
-      const projectCards = gsap.utils.toArray<HTMLElement>(
-        "[data-project-card]",
+    if (heroCopy) {
+      play(
+        heroCopy,
+        [
+          { transform: "translate3d(0, 28px, 0)" },
+          { transform: "translate3d(0, 0, 0)" },
+        ],
+        { duration: 720, easing: easeOut },
       );
+    }
 
-      projectCards.forEach((card, index) => {
-        gsap.set(card, { opacity: 1 });
-
-        gsap.fromTo(
-          card,
-          { y: 70 },
+    if (heroMedia) {
+      play(
+        heroMedia,
+        [
           {
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 96%",
-              end: "top 68%",
-              scrub: true,
-            },
+            transform: isCompact
+              ? "translate3d(0, 20px, 0) scale(0.97)"
+              : "translate3d(56px, 0, 0) scale(0.97)",
           },
+          { transform: "translate3d(0, 0, 0) scale(1)" },
+        ],
+        { duration: 820, delay: 80, easing: easeOut },
+      );
+    }
+
+    const revealElements = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-reveal]"),
+    );
+
+    const projectCards = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-project-card]"),
+    ).map((card) => ({
+      card,
+      shade: card.querySelector<HTMLElement>(".project-shade"),
+      translateY: 0,
+      scale: 1,
+      shadeOpacity: 0,
+    }));
+    const stackedProjects = window.matchMedia(
+      "(min-width: 1024px) and (hover: hover) and (pointer: fine)",
+    );
+    let projectFrame: number | null = null;
+
+    const updateProjects = () => {
+      projectFrame = null;
+
+      const viewportHeight = window.innerHeight;
+      const entranceDistance = viewportHeight * 0.28;
+      const stackDistance = viewportHeight * 0.7;
+
+      projectCards.forEach((project, index) => {
+        const rect = project.card.getBoundingClientRect();
+        const layoutTop = rect.top - project.translateY;
+        const entranceProgress = clamp(
+          (viewportHeight * 0.96 - layoutTop) / entranceDistance,
         );
+        const translateY = 70 * (1 - entranceProgress);
 
-        const nextCard = projectCards[index + 1];
-        if (nextCard) {
-          const shade = card.querySelector<HTMLElement>(".project-shade");
-          const stackTimeline = gsap.timeline({
-            scrollTrigger: {
-              trigger: nextCard,
-              start: "top 88%",
-              end: "top 18%",
-              scrub: true,
-            },
-          });
+        const nextProject = projectCards[index + 1];
+        let stackProgress = 0;
 
-          stackTimeline.to(card, { scale: 0.92, ease: "none" }, 0);
+        if (nextProject && stackedProjects.matches) {
+          const nextRect = nextProject.card.getBoundingClientRect();
+          const nextLayoutTop = nextRect.top - nextProject.translateY;
+          stackProgress = clamp(
+            (viewportHeight * 0.88 - nextLayoutTop) / stackDistance,
+          );
+        }
 
-          if (shade) {
-            stackTimeline.to(
-              shade,
-              {
-                backgroundColor: "rgb(17 17 15 / 0.52)",
-                ease: "none",
-              },
-              0,
-            );
-          }
+        const scale = 1 - stackProgress * 0.08;
+        const shadeOpacity = stackProgress * 0.52;
+        const isMoving =
+          (entranceProgress > 0 && entranceProgress < 1) ||
+          (stackProgress > 0 && stackProgress < 1);
+
+        if (
+          Math.abs(project.translateY - translateY) > 0.05 ||
+          Math.abs(project.scale - scale) > 0.0005
+        ) {
+          project.card.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+          project.translateY = translateY;
+          project.scale = scale;
+        }
+
+        if (
+          project.shade &&
+          Math.abs(project.shadeOpacity - shadeOpacity) > 0.002
+        ) {
+          project.shade.style.backgroundColor = `rgb(17 17 15 / ${shadeOpacity.toFixed(3)})`;
+          project.shadeOpacity = shadeOpacity;
+        }
+
+        project.card.style.willChange = isMoving ? "transform" : "auto";
+        if (project.shade) {
+          project.shade.style.willChange = isMoving
+            ? "background-color"
+            : "auto";
         }
       });
+    };
 
-      const media = gsap.matchMedia();
-      media.add("(min-width: 1024px)", () => {
-        const intro = scope.current?.querySelector<HTMLElement>(
-          "[data-projects-intro]",
-        );
-        const section = scope.current?.querySelector<HTMLElement>(
-          "[data-projects-section]",
-        );
+    const scheduleProjectUpdate = () => {
+      if (projectFrame === null) {
+        projectFrame = window.requestAnimationFrame(updateProjects);
+      }
+    };
 
-        if (intro && section) {
-          ScrollTrigger.create({
-            trigger: intro,
-            start: "top 12%",
-            endTrigger: section,
-            end: "bottom bottom",
-            pin: true,
-            pinSpacing: false,
-          });
-        }
+    const resetProjects = () => {
+      projectCards.forEach(({ card, shade }) => {
+        card.style.removeProperty("transform");
+        card.style.removeProperty("will-change");
+        shade?.style.removeProperty("background-color");
+        shade?.style.removeProperty("will-change");
       });
+    };
 
-      const refresh = () => ScrollTrigger.refresh();
-      window.addEventListener("load", refresh, { once: true });
+    if (projectCards.length > 0) {
+      scheduleProjectUpdate();
+      window.addEventListener("scroll", scheduleProjectUpdate, {
+        passive: true,
+      });
+      window.addEventListener("resize", scheduleProjectUpdate);
+      window.addEventListener("load", scheduleProjectUpdate, { once: true });
+      stackedProjects.addEventListener("change", scheduleProjectUpdate);
+    }
 
+    if (!("IntersectionObserver" in window)) {
       return () => {
-        window.removeEventListener("load", refresh);
-        media.revert();
+        window.removeEventListener("scroll", scheduleProjectUpdate);
+        window.removeEventListener("resize", scheduleProjectUpdate);
+        window.removeEventListener("load", scheduleProjectUpdate);
+        stackedProjects.removeEventListener("change", scheduleProjectUpdate);
+        if (projectFrame !== null) {
+          window.cancelAnimationFrame(projectFrame);
+        }
+        resetProjects();
+        animations.forEach((animation) => {
+          animation.cancel();
+        });
       };
-    },
-    { scope },
-  );
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) {
+            continue;
+          }
+
+          const element = entry.target as HTMLElement;
+          play(
+            element,
+            [
+              { opacity: 0.72, transform: "translate3d(0, 24px, 0)" },
+              { opacity: 1, transform: "translate3d(0, 0, 0)" },
+            ],
+            { duration: 620, easing: easeOut },
+          );
+          observer.unobserve(element);
+        }
+      },
+      { rootMargin: "0px 0px -12%", threshold: 0.08 },
+    );
+
+    const marqueeTrack = root.querySelector<HTMLElement>(".marquee-track");
+    let marqueeIsVisible = false;
+    const updateMarqueeMotion = () => {
+      marqueeTrack?.classList.toggle(
+        "is-visible",
+        marqueeIsVisible && document.visibilityState === "visible",
+      );
+    };
+    const marqueeObserver = marqueeTrack
+      ? new IntersectionObserver(
+          ([entry]) => {
+            marqueeIsVisible = entry?.isIntersecting ?? false;
+            updateMarqueeMotion();
+          },
+          { rootMargin: "120px 0px" },
+        )
+      : null;
+
+    if (marqueeTrack && marqueeObserver) {
+      marqueeObserver.observe(marqueeTrack);
+      document.addEventListener("visibilitychange", updateMarqueeMotion);
+    }
+
+    for (const element of revealElements) {
+      observer.observe(element);
+    }
+
+    return () => {
+      observer.disconnect();
+      marqueeObserver?.disconnect();
+      document.removeEventListener("visibilitychange", updateMarqueeMotion);
+      marqueeTrack?.classList.remove("is-visible");
+      window.removeEventListener("scroll", scheduleProjectUpdate);
+      window.removeEventListener("resize", scheduleProjectUpdate);
+      window.removeEventListener("load", scheduleProjectUpdate);
+      stackedProjects.removeEventListener("change", scheduleProjectUpdate);
+      if (projectFrame !== null) {
+        window.cancelAnimationFrame(projectFrame);
+      }
+      resetProjects();
+      for (const animation of animations) {
+        animation.cancel();
+      }
+    };
+  }, []);
 
   return (
-    <main ref={scope} className="w-full max-w-full overflow-x-hidden">
+    <div ref={scope} className="w-full max-w-full overflow-x-clip">
       {children}
-    </main>
+    </div>
   );
 }
